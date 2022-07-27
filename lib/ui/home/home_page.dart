@@ -12,7 +12,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => HomeController(),
-      child: const HomeButton(),
+      child: const Scaffold(
+        body: HomeButton()
+      ),
     );
   }
 }
