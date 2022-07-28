@@ -2,14 +2,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_chat_test/ui/chat/chat_controller.dart';
 import 'package:provider/provider.dart';
 
-class ChatMessages extends StatelessWidget {
+class ChatMessages extends StatefulWidget {
   const ChatMessages({Key? key}) : super(key: key);
+
+  @override
+  State<ChatMessages> createState() => _ChatMessagesState();
+}
+
+class _ChatMessagesState extends State<ChatMessages> {
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<ChatController>(context);
+    
+    if(_scrollController.hasClients){
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent + 200,
+        duration: const Duration(seconds: 1),
+        curve: Curves.fastOutSlowIn,
+      );
+    }
+
     return Expanded(
       child: ListView.builder(
+        controller: _scrollController,
         itemCount: controller.messages.length,
         itemBuilder: (ctx, i) {
           return controller.messages[i];
@@ -34,5 +51,12 @@ class ChatMessages extends StatelessWidget {
       //   ],
       // ),
     );
+  }
+  
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _scrollController.dispose();
   }
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MessageWidget extends StatelessWidget {
-  const MessageWidget({Key? key, required this.received, required this.text, }) : super(key: key);
+  const MessageWidget({Key? key, required this.received, required this.text, this.name, }) : super(key: key);
   final bool received;
   final String text;
+  final String? name;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,12 +26,25 @@ class MessageWidget extends StatelessWidget {
             bottom: 10,
             right: 5
           ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 25
+      child: (received) 
+        ? Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(name!, style: const TextStyle(fontWeight: FontWeight.bold),),
+            Text(
+              text,
+              style: const TextStyle(
+                fontSize: 25
+              ),
+            ),
+          ],
+        )
+        : Text(
+          text,
+          style: const TextStyle(
+            fontSize: 25
+          ),
         ),
-      ),
     );
   }
 }

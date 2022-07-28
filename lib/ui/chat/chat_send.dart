@@ -1,13 +1,23 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_test/ui/chat/chat_controller.dart';
 import 'package:provider/provider.dart';
 
-class ChatSend extends StatelessWidget {
-  ChatSend({Key? key}) : super(key: key);
+class ChatSend extends StatefulWidget {
+  const ChatSend({Key? key}) : super(key: key);
+
+  @override
+  State<ChatSend> createState() => _ChatSendState();
+}
+
+class _ChatSendState extends State<ChatSend> {
   final _textController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<ChatController>(context);
+    final controller = Provider.of<ChatController>(context, listen: false);
+    log("rebuilding");
     return Container(
       decoration: const BoxDecoration(
         color: Color.fromARGB(0, 82, 82, 83)
@@ -36,5 +46,12 @@ class ChatSend extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _textController.dispose();
   }
 }

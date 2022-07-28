@@ -25,8 +25,8 @@ class ChatBody extends StatelessWidget {
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const ChatMessages(),
+          children: const [
+            ChatMessages(),
             ChatSend(),
           ],
         ),
