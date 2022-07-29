@@ -26,7 +26,7 @@ class MessageWidget extends StatelessWidget {
             bottom: 10,
             right: 5
           ),
-      child: (received) 
+      child: (name != null) 
         ? Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

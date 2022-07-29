@@ -12,7 +12,7 @@ class ChatBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<ChatController>(context);
+    final controller = Provider.of<ChatController>(context, listen: false);
     return WillPopScope(
       onWillPop: () async {
         controller.desconectar();

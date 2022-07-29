@@ -26,6 +26,9 @@ class _ChatSendState extends State<ChatSend> {
       child: Row(
         children: [
           Expanded(child: TextField(
+            onChanged: ((_) => setState(() {
+              
+            })),
             controller: _textController,
             decoration: const InputDecoration(
               filled: true,
@@ -36,12 +39,28 @@ class _ChatSendState extends State<ChatSend> {
             ),
           )),
           IconButton(
-            onPressed: () {
-              controller.sendMessage(_textController.text);
-              controller.addMessage(_textController.text, false);
-              _textController.text = "";
-            },
-            icon: const Icon(Icons.send, size: 30, color: Colors.blue,),
+            color: Colors.blue,
+            disabledColor: Colors.grey,
+            onPressed: (_textController.text.isNotEmpty && _textController.text.trim().isNotEmpty) 
+              ? () {
+                  log(_textController.text);
+                  if(!_textController.text.contains('🏳️‍🌈')){
+                    controller.sendMessage(_textController.text);
+                    controller.addMessage(_textController.text, false);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Se reserva derecho de admisión")
+                      ),
+                    );
+                  }
+                  _textController.text = "";
+                  setState(() {
+                    
+                  });
+              }
+              : null,
+            icon: const Icon(Icons.send, size: 30),
           ),
         ],
       ),

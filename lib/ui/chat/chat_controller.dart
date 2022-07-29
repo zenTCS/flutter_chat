@@ -16,11 +16,10 @@ class ChatController extends ChangeNotifier{
     final prefs = await SharedPreferences.getInstance();
     final name = prefs.getString('name');
     final clientio = io(
-      'http://172.16.90.127:3000/chat', 
+      'http://172.16.90.127:3000/chat?name=$name', 
       <String, dynamic> {'transports': ['websocket']
     });
     client = clientio;
-    clientio.onConnect((data) => clientio.emit('name', name));
     clientio.onDisconnect((data) {
       log("desconectado $data");
       desconectar();
