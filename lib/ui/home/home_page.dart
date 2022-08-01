@@ -12,8 +12,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => HomeController(),
-      child: Scaffold(
-        body: HomeButton()
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: const Scaffold(
+          body: HomeButton()
+        ),
       ),
     );
   }

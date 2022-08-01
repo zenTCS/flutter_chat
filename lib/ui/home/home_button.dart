@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeButton extends StatefulWidget {
-  HomeButton({Key? key}) : super(key: key);
+  const HomeButton({Key? key}) : super(key: key);
 
   @override
   State<HomeButton> createState() => _HomeButtonState();
@@ -16,6 +16,8 @@ class HomeButton extends StatefulWidget {
 class _HomeButtonState extends State<HomeButton> {
   final TextEditingController _textEditingController = TextEditingController();
 
+  int? _selectedIndex;
+
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<HomeController>(context);
@@ -23,17 +25,50 @@ class _HomeButtonState extends State<HomeButton> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextField(
-            onChanged: (_) => setState(() {
-              
-            }),
-            controller: _textEditingController,
+          Container(
+            margin: const EdgeInsets.only(right: 25, left: 25),
+            child: TextField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'John',
+                labelText: 'Nombre'
+              ),
+              onChanged: (_) => setState(() {
+                
+              }),
+              controller: _textEditingController,
+            ),
+          ),
+          Column(
+            children: [
+              RadioListTile(
+                title: const Text("Admin"),
+                value: 0,
+                groupValue: _selectedIndex,
+                onChanged: (int? newIndex) {
+                  setState(() {
+                    _selectedIndex = newIndex;
+                  });
+                }
+              ),
+              RadioListTile(
+                title: const Text("User"),
+                value: 1,
+                groupValue: _selectedIndex,
+                onChanged: (int? newIndex) {
+                  setState(() {
+                    _selectedIndex = newIndex;
+                  });
+                }
+              ),
+            ],
           ),
           TextButton(
-            onPressed: (_textEditingController.text.isNotEmpty) 
+            onPressed: (_textEditingController.text.isNotEmpty && _selectedIndex != null) 
               ? () async {
                   final prefs = await SharedPreferences.getInstance();
                   prefs.setString('name', _textEditingController.text);
+                  prefs.setString('type', (_selectedIndex == 0) ? 'Admin' : 'User');
                   if(mounted){
                     Navigator.pushNamed(context, Routes.chat);
                   }
@@ -42,7 +77,7 @@ class _HomeButtonState extends State<HomeButton> {
             child: Text(
               "Conectar",
               style: TextStyle(
-                color: (_textEditingController.text.isNotEmpty) ? Colors.blue : Colors.grey,
+                color: (_textEditingController.text.isNotEmpty && _selectedIndex != null) ? Colors.blue : Colors.grey,
               ),
             ),
           ),
