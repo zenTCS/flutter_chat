@@ -34,6 +34,17 @@ class ChatController extends ChangeNotifier{
     clientio.on('message', (data) {
       addMessage(data, true);
     });
+    clientio.on('connect_error', (_) {
+      showAlertOptions(
+        context,
+        msg: 'Servidor no disponible',
+        title: 'Importante',
+        closeOnPressed: () {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        }
+      );
+    });
     clientio.on('con', (data) {
       showAlertOptions(
         context,

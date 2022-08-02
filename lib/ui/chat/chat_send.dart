@@ -36,6 +36,10 @@ class _ChatSendState extends State<ChatSend> {
             ),
           )),
           IconButton(
+            onPressed: () => {},
+            icon: const Icon(Icons.add_photo_alternate)
+          ),
+          IconButton(
             color: Colors.blue,
             disabledColor: Colors.grey,
             onPressed: (_textController.text.isNotEmpty && _textController.text.trim().isNotEmpty) 
