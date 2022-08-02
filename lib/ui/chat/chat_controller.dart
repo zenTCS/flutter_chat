@@ -20,7 +20,7 @@ class ChatController extends ChangeNotifier{
     final name = prefs.getString('name');
     final type = prefs.getString('type');
     final clientio = io(
-      'http://172.16.90.127:3000/test?name=$name&type=$type', 
+      'http://localhost:3000/test?name=$name&type=$type', 
       <String, dynamic> {'transports': ['websocket']
     });
     client = clientio;
