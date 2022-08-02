@@ -14,6 +14,7 @@ class ChatController extends ChangeNotifier{
   List<Widget> messages = [
     const SizedBox(height: 10,),
   ];
+
   void conectar() async {{
     final prefs = await SharedPreferences.getInstance();
     final name = prefs.getString('name');
@@ -26,6 +27,9 @@ class ChatController extends ChangeNotifier{
     clientio.onDisconnect((data) {
       log("desconectado $data");
       desconectar();
+      if(data == 'transport close'){
+        Navigator.pop(context);
+      }
     });
     clientio.on('message', (data) {
       addMessage(data, true);

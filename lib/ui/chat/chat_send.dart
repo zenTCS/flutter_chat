@@ -17,7 +17,6 @@ class _ChatSendState extends State<ChatSend> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<ChatController>(context, listen: false);
-    log("rebuilding");
     return Container(
       decoration: const BoxDecoration(
         color: Color.fromARGB(0, 82, 82, 83)
@@ -26,9 +25,7 @@ class _ChatSendState extends State<ChatSend> {
       child: Row(
         children: [
           Expanded(child: TextField(
-            onChanged: ((_) => setState(() {
-              
-            })),
+            onChanged: (_) => setState(() {}),
             controller: _textController,
             decoration: const InputDecoration(
               filled: true,
@@ -43,21 +40,10 @@ class _ChatSendState extends State<ChatSend> {
             disabledColor: Colors.grey,
             onPressed: (_textController.text.isNotEmpty && _textController.text.trim().isNotEmpty) 
               ? () {
-                  log(_textController.text);
-                  if(!_textController.text.contains('🏳️‍🌈')){
-                    controller.sendMessage(_textController.text);
-                    controller.addMessage(_textController.text, false);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Se reserva derecho de admisión")
-                      ),
-                    );
-                  }
+                  controller.sendMessage(_textController.text);
+                  controller.addMessage(_textController.text, false);
                   _textController.text = "";
-                  setState(() {
-                    
-                  });
+                  setState(() {});
               }
               : null,
             icon: const Icon(Icons.send, size: 30),
